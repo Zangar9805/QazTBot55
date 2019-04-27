@@ -1,1 +1,1 @@
-bot: java $JAVA_OPTS -Dhttp.port=$PORT -cp target/classes/:target/dependency/* kz.zangpro.MainApp
+web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*war
