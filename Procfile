@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Deserver.port=$PORT target/classes/:target/dependency/* kz.zangpro.MainApp
+web: java $JAVA_OPTS -Deserver.port=$PORT -cp target/classes/:target/dependency/* kz.zangpro.MainApp
