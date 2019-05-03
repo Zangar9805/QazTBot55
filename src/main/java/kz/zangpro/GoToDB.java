@@ -7,9 +7,9 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GoToDB {
+class GoToDB {
 
-    public String performPostCall(String requestURL, HashMap<String, String> postDataParams){
+    String performPostCall(String requestURL, HashMap<String, String> postDataParams){
         URL url;
         String response = "";
 
