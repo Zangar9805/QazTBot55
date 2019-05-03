@@ -66,6 +66,8 @@ public class MainApp extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
 
+        if (menuState == GENERAL_MENU_STATE) setGeneralMenuButtons();
+
         String userName = "defName", linkUser = "defUserName", fullName, chatId;
         if (message.getChat().getFirstName() != null) userName = message.getChat().getFirstName();
         chatId = message.getChatId().toString();
@@ -207,7 +209,6 @@ public class MainApp extends TelegramLongPollingBot {
 
         sendMessage.setText(text);
         try {
-            setGeneralMenuButtons(sendMessage);
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
@@ -263,7 +264,7 @@ public class MainApp extends TelegramLongPollingBot {
         }
     }
 
-    private void setGeneralMenuButtons(SendMessage sendMessage) {
+    private void setGeneralMenuButtons() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         //sendMessage.setReplyMarkup(replyKeyboardMarkup);
         replyKeyboardMarkup.setSelective(true);
