@@ -1,5 +1,7 @@
-package kz.zangpro;
+package kz.zangpro.data;
 
+import kz.zangpro.models.NewsModel;
+import kz.zangpro.models.WeatherModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -8,7 +10,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -55,27 +56,31 @@ public class DataDownloader {
                 "http://openweathermap.org/img/w/"+model.getIcon()+".png";
     }
 
-    public String getSportNews() throws IOException {
-        String result = "";
-
-        Document doc = Jsoup.connect("https://sports.kz/football").get();
-        Elements uls = doc.getElementsByClass("today_ npdg");
-        Elements lis = uls.select("li");
-        Elements news = lis.select(".t_best");
-
-        for (int i = 0; i < 5; i++) {
-            String date = news.get(i).select("b").select("i").text();
-            String header = news.get(i).select("span").select("a").get(1).text();
-            String link = news.get(i).select("span").select("a").get(0).attr("href");
-            String views = news.get(i).select("span").select("span").select("u").text();
-
-            result += "_"+date + "_\n*" + header + "*... " +  "[Мақаланы оқу](https://m.sports.kz"+link+")" + "\n" +
-                    "Оқылды: *" + views + "* рет\n\n";
+    public String getNewsFromStanKz(String type, NewsModel model) throws IOException {
+        StringBuilder result = new StringBuilder();
+        String category;
+        switch (type){
+            case "Спорт": category = "sport"; break;
+            case "Әлемде": category = "alemde"; break;
+            case "Шоу-бизнес": category = "madeniet-jane-show-biznes"; break;
+            case "Саясат": category = "sayasat_jane_karji"; break;
+            case "Өмір айнасы": category = "omirainasy"; break;
+            default: category = "madeniet-jane-show-biznes";
         }
 
-        //System.out.println(news.size());
+        Document doc = Jsoup.connect("http://stan.kz/category/"+category+"/").get();
+        Elements mainContainer = doc.getElementsByClass("bottom paginate-container");
+        Elements innerContainers = mainContainer.select("a");
 
-        return result;
+        for (int i = 0; i < 5; i++) {
+            model.setUrlText(innerContainers.get(i).attr("href"));
+            model.setHeaderText(innerContainers.get(i).getElementsByClass("bn").get(0).getElementsByClass("block").get(0).select("h2").text());
+            //model.setText(innerContainers.get(i).getElementsByClass("bn").get(0).getElementsByClass("block").get(0).getElementsByClass("text").text());
+            result.append("*").append(model.getHeaderText()).append("...*[Жалғасын оқу](http://stan.kz").append(model.getUrlText()).append(")\n\n");
+        }
+
+
+        return result.toString();
     }
 
     public String getQuote() throws IOException {
@@ -88,7 +93,7 @@ public class DataDownloader {
 
         JSONObject json = new JSONObject(result);
         String quote = json.getString("quotes");
-        String author = json.getString("author");
+        //String author = json.getString("author");
 
         return quote;
     }

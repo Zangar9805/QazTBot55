@@ -1,6 +1,6 @@
-kz/zangpro/WeatherModel.class
-kz/zangpro/NewsDownloader.class
-kz/zangpro/DataDownloader.class
-kz/zangpro/GoToDB.class
+kz/zangpro/data/GoToDB.class
+kz/zangpro/models/WeatherModel.class
+kz/zangpro/data/DataDownloader.class
 kz/zangpro/MainApp.class
 kz/zangpro/Buttons.class
+kz/zangpro/models/NewsModel.class

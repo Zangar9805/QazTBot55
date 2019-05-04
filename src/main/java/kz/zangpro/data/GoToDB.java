@@ -1,4 +1,4 @@
-package kz.zangpro;
+package kz.zangpro.data;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -7,9 +7,9 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-class GoToDB {
+public class GoToDB {
 
-    String performPostCall(String requestURL, HashMap<String, String> postDataParams){
+    public String performPostCall(String requestURL, HashMap<String, String> postDataParams){
         URL url;
         String response = "";
 

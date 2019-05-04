@@ -1,4 +1,4 @@
-package kz.zangpro;
+package kz.zangpro.models;
 
 public class WeatherModel {
     String city;
