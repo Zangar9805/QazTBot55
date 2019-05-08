@@ -28,7 +28,7 @@ public class Buttons {
     public static String newsBiznesMenuText = EmojiParser.parseToUnicode(":dancer: Шоу-бизнес");
     public static String newsWorldMenuText = EmojiParser.parseToUnicode(":earth_africa: Әлемде");
     public static String newsPoliticiesMenuText = EmojiParser.parseToUnicode(":briefcase: Саясат");
-    public static String newsLifeMenuText = EmojiParser.parseToUnicode(":diamond_shape_with_a_dot_inside: Өмір айнасы");
+    public static String newsLifeMenuText = EmojiParser.parseToUnicode(":diamond_shape_with_a_dot_inside: Өмір-айнасы");
     public static String newsSportMenuText = EmojiParser.parseToUnicode(":football: Спорт");
     //static String backToMainMenuText = EmojiParser.parseToUnicode(":house_with_garden: Басты меню");
 

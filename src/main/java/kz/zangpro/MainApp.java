@@ -50,6 +50,7 @@ public class MainApp extends TelegramLongPollingBot {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         MainApp bot = new MainApp();
+
         try {
             telegramBotsApi.registerBot(bot);
         } catch (TelegramApiRequestException e) {
@@ -182,7 +183,6 @@ public class MainApp extends TelegramLongPollingBot {
         sendMessage.setChatId(message.getChatId().toString());
         sendMessage.setReplyToMessageId(message.getMessageId());
 
-
         /*
          *  !--- Менюдің басқарушы пәрмендері ---------------------------------------------------
          *  */
@@ -201,11 +201,16 @@ public class MainApp extends TelegramLongPollingBot {
             }
         } else if (menuState.equals(NEWS_MENU_STATE)){
             if (text.equals("Get News")){
-                String type = message.getText().split(" ")[1];
                 try {
+                    String type = message.getText().split(" ")[1];
                     text = dataDownl.getNewsFromStanKz(type, new NewsModel());
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e){
+                    text = "Кешіріңіз дәл қазір мен бұл сұрағыңызға жауап бере алмаймын. " +
+                            "Мен әлі дайындалу үстіндемін, ол үшін маған көөөп оқу керек. \n\n" +
+                            "Егер осында жаңа функцияның енгізілгенін қаласаңыз, ол туралы толық мәліметті бот авторына-@zangking жіберсеңіз болады. Біз кез-келген идеяны қабылдауға дайынбыз!";
+                    sendMsgAll(message.getText()+"\nжазған: "+message.getChat().getFirstName()+"\nЖеке чат номері: "+message.getChatId(), myChatId);
                 }
             }
         } else menuState = GENERAL_MENU_STATE;

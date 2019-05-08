@@ -64,7 +64,7 @@ public class DataDownloader {
             case "Әлемде": category = "alemde"; break;
             case "Шоу-бизнес": category = "madeniet-jane-show-biznes"; break;
             case "Саясат": category = "sayasat_jane_karji"; break;
-            case "Өмір айнасы": category = "omirainasy"; break;
+            case "Өмір-айнасы": category = "omirainasy"; break;
             default: category = "madeniet-jane-show-biznes";
         }
 
