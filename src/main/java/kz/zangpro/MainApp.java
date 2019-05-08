@@ -34,7 +34,7 @@ public class MainApp extends TelegramLongPollingBot {
 
     private String weatherMenuText = Buttons.weatherMenuText;
     private String newsMenuText = Buttons.newsMenuText;
-    private String addQuoteMenuText = Buttons.addQuoteMenuText;
+    private String gamesMenuText = Buttons.gamesMenuText;
     private String quoteMenuText = Buttons.quoteMenuText;
     private String helpMenuText = Buttons.helpMenuText;
     private String faqMenuText = Buttons.faqMenuText;
@@ -43,12 +43,15 @@ public class MainApp extends TelegramLongPollingBot {
     private String weatherOtherCityText = Buttons.weatherOtherCityText;
     private String backToMainMenuText = Buttons.backToMainMenuText;
 
+    private String getQuotesMenuText = Buttons.getQuotesMenuText;
+    private String addQuotesMenuText = Buttons.addQuotesMenuText;
+
     private DataDownloader dataDownl = new DataDownloader();
     private String myChatId = "351165895";
 
     public static void main(String... args) {
         ApiContextInitializer.init();
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+        TelegramBotsApi telegramBotsApi = new TelegramBotsApi(); //7478098667
         MainApp bot = new MainApp();
 
         try {
@@ -101,6 +104,10 @@ public class MainApp extends TelegramLongPollingBot {
 
             }
 
+            else if (mess.equals("/author")) sendDataMsg(message, " Мені ойлап тапқан:\nЕгетай Заңғар Саматұлы\n@zangking");
+            else if (mess.equals("/settings")) sendDataMsg(message, "Дәл қазір бұл аймақ өңделіп жатыр...");
+            else if (mess.equals("/aq")) menuState = QUOTE_MENU_STATE;
+
             else if (mess.equals("/help") || mess.equals(helpMenuText))
                 sendDataMsg(message, "Қандай көмек көрсете аламын?\n" + "Қол жетімді командалар(пәрмен) тізімін көру үшін \"/\" символын теріңіз.");
 
@@ -122,20 +129,21 @@ public class MainApp extends TelegramLongPollingBot {
                 sendDataMsg(message, "Қазіргі таңда бот сізге келесі бөлімдер бойынша жаңалықтар көрсете алады:\n");
 
             }
-            else if (mess.equals(quoteMenuText)) sendDataMsg(message, "Get Quote");
+            else if (mess.equals(quoteMenuText)) {
+                menuState = QUOTE_MENU_STATE;
+                sendDataMsg(message, getQuotesMenuText);
+            }
+            else if (mess.equals(getQuotesMenuText)) sendDataMsg(message, "Get Quote");
 
-            else if (mess.equals("/author")) sendDataMsg(message, " Мені ойлап тапқан:\nЕгетай Заңғар Саматұлы\n@zangking");
 
             else if (mess.equals(backToMainMenuText)) {
                 menuState = GENERAL_MENU_STATE;
                 sendDataMsg(message, backToMainMenuText);
             }
 
-            else if (mess.equals("/settings")) sendDataMsg(message, "Дәл қазір бұл аймақ өңделіп жатыр...");
 
-            else if (mess.equals("/aq")) menuState = QUOTE_MENU_STATE;
 
-            else if (mess.equals(addQuoteMenuText)) {
+            else if (mess.equals(addQuotesMenuText)) {
                 sendDataMsg(message, "Сіз өзіңізге ұнайтын цитатаңызды қосуыңызға болады.\n" +
                         "Ол үшін хабарлама жолына цитатаңызды жазып жіберіңіз!\n\n");
                 menuState = MESS_TO_ME_MENU_STATE;
@@ -145,28 +153,26 @@ public class MainApp extends TelegramLongPollingBot {
                 sendDataMsg(message, "Рахмет, цитатаңыз тексерілуге жіберілді. Егер тексерістен өтсе, осы жерден өз цитатаңызды оқи аласыз!\n");
                 menuState = GENERAL_MENU_STATE;
 
-            } else if (mess.equals("QazTBot") ||
-                    mess.equals("QaztBot") ||
-                    mess.equals("qaztBot") ||
-                    mess.equals("qaztbot") ||
-                    mess.equals("Qaztbot") ||
-                    mess.equals("qazTbot") ||
-                    mess.equals("qazTBot")) sendDataMsg(message, "Ау?)");
-
-            else if (menuState.equals(QUOTE_MENU_STATE)) {
+            } else if (menuState.equals(QUOTE_MENU_STATE)) {
                 GoToDB requestAddQuote = new GoToDB();
                 HashMap<String, String> data = new HashMap<>();
                 data.put("type", "quote");
                 data.put("quote", mess);
                 data.put("author", fullName);
                 requestAddQuote.performPostCall("http://zangpro.kz/reqpage", data);
-                sendDataMsg(message, "Құттықтаймын сіз жіберген нақыл сөз біздің декректер қорына енгізілді!\n");
+                sendDataMsg(message, "Құттықтаймын, сіз жіберген нақыл сөз біздің декректер қорына енгізілді!\n");
                 menuState = GENERAL_MENU_STATE;
 
             }
-
             else if (menuState.equals(WEATHER_MENU_STATE)) sendDataMsg(message, "Weather Text");
             else if (menuState.equals(NEWS_MENU_STATE)) sendDataMsg(message, "Get News");
+            else if (mess.equals("QazTBot") ||
+                    mess.equals("QaztBot") ||
+                    mess.equals("qaztBot") ||
+                    mess.equals("qaztbot") ||
+                    mess.equals("Qaztbot") ||
+                    mess.equals("qazTbot") ||
+                    mess.equals("qazTBot")) sendDataMsg(message, "Ау?)");
 
             else {
                 sendDataMsg(message, "Кешіріңіз дәл қазір мен бұл сұрағыңызға жауап бере алмаймын. " +
@@ -213,22 +219,22 @@ public class MainApp extends TelegramLongPollingBot {
                     sendMsgAll(message.getText()+"\nжазған: "+message.getChat().getFirstName()+"\nЖеке чат номері: "+message.getChatId(), myChatId);
                 }
             }
-        } else menuState = GENERAL_MENU_STATE;
-
-
-        if (text.equals("Get Quote")) {
-            try {
-                text = dataDownl.getQuote();
-            } catch (IOException e) {
-                e.printStackTrace();
+        } else if (menuState.equals(QUOTE_MENU_STATE)){
+            if (text.equals("Get Quote")) {
+                try {
+                    text = dataDownl.getQuote();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        } else menuState = GENERAL_MENU_STATE;
 
 
         sendMessage.setText(text);
         try {
             if (menuState.equals(WEATHER_MENU_STATE)) Buttons.setWeatherMenuButtons(sendMessage);
             else if (menuState.equals(NEWS_MENU_STATE)) Buttons.setNewsMenuButtons(sendMessage);
+            else if (menuState.equals(QUOTE_MENU_STATE)) Buttons.setQuotesMenuButtons(sendMessage);
             else Buttons.setGeneralMenuButtons(sendMessage);
             execute(sendMessage);
         } catch (TelegramApiException e) {
@@ -240,7 +246,6 @@ public class MainApp extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        //sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(text);
         try {
             execute(sendMessage);
