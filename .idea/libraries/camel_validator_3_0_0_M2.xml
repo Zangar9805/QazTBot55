@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="camel-validator-3.0.0-M2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/repo/org/apache/camel/camel-validator/3.0.0-M2/camel-validator-3.0.0-M2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

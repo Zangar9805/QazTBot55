@@ -1,5 +1,7 @@
-/home/zango/IdeaProjects/examTwo/QazTBot/src/main/java/kz/zangpro/NewsDownloader.java
-/home/zango/IdeaProjects/examTwo/QazTBot/src/main/java/kz/zangpro/WeatherModel.java
-/home/zango/IdeaProjects/examTwo/QazTBot/src/main/java/kz/zangpro/MainApp.java
-/home/zango/IdeaProjects/examTwo/QazTBot/src/main/java/kz/zangpro/DataDownloader.java
-/home/zango/IdeaProjects/examTwo/QazTBot/src/main/java/kz/zangpro/GoToDB.java
+C:\project\frozen-oasis-32393\src\main\java\kz\zangpro\data\DataDownloader.java
+C:\project\frozen-oasis-32393\src\main\java\kz\zangpro\models\WeatherModel.java
+C:\project\frozen-oasis-32393\src\main\java\kz\zangpro\Buttons.java
+C:\project\frozen-oasis-32393\src\main\java\kz\zangpro\data\PostgresDB.java
+C:\project\frozen-oasis-32393\src\main\java\kz\zangpro\MainApp.java
+C:\project\frozen-oasis-32393\src\main\java\kz\zangpro\data\GoToDB.java
+C:\project\frozen-oasis-32393\src\main\java\kz\zangpro\models\NewsModel.java

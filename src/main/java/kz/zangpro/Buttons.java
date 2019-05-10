@@ -37,6 +37,14 @@ class Buttons {
     private static String newsSportMenuText = EmojiParser.parseToUnicode(":football: Спорт");
     //static String backToMainMenuText = EmojiParser.parseToUnicode(":house_with_garden: Басты меню");
 
+    /* !- Ойындар мәзірінің текст айнымалылары------------------------------------------------------ */
+    static String gamesPaintIoMenuText = EmojiParser.parseToUnicode("Paintio");
+    static String gamesCorsairsMenuText = EmojiParser.parseToUnicode("Corsairs");
+    static String gamesMotofx2MenuText = EmojiParser.parseToUnicode("Motofx2");
+    static String gamesLumberJackMenuText = EmojiParser.parseToUnicode("LumberJack");
+    static String gamesSpinnerMenuText = EmojiParser.parseToUnicode("SpinnerWinner");
+    //static String backToMainMenuText = EmojiParser.parseToUnicode(":house_with_garden: Басты меню");
+
 
     static void setGeneralMenuButtons(SendMessage sendMessage) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -124,6 +132,31 @@ class Buttons {
         keyboardRowSecond.add(new KeyboardButton(newsWorldMenuText));
         keyboardRowSecond.add(new KeyboardButton(newsLifeMenuText));
         keyboardRowThird.add(new KeyboardButton(newsSportMenuText));
+        keyboardRowThird.add(new KeyboardButton(backToMainMenuText));
+
+        keyboardRows.add(keyboardRowFirst);
+        keyboardRows.add(keyboardRowSecond);
+        keyboardRows.add(keyboardRowThird);
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+    }
+
+    static void setGamesMenuButtons(SendMessage sendMessage) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowFirst = new KeyboardRow();
+        KeyboardRow keyboardRowSecond = new KeyboardRow();
+        KeyboardRow keyboardRowThird = new KeyboardRow();
+
+        keyboardRowFirst.add(new KeyboardButton(gamesPaintIoMenuText));
+        keyboardRowFirst.add(new KeyboardButton(gamesCorsairsMenuText));
+        keyboardRowSecond.add(new KeyboardButton(gamesLumberJackMenuText));
+        keyboardRowSecond.add(new KeyboardButton(gamesMotofx2MenuText));
+        keyboardRowThird.add(new KeyboardButton(gamesSpinnerMenuText));
         keyboardRowThird.add(new KeyboardButton(backToMainMenuText));
 
         keyboardRows.add(keyboardRowFirst);

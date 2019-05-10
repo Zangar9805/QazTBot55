@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="aopalliance-repackaged-2.5.0-b32">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/repo/org/glassfish/hk2/external/aopalliance-repackaged/2.5.0-b32/aopalliance-repackaged-2.5.0-b32.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

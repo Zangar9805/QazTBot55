@@ -28,23 +28,30 @@ public class MainApp extends TelegramLongPollingBot {
     private final String WEATHER_MENU_STATE = "weatherMenu";
     private final String QUOTE_MENU_STATE = "quoteMenu";
     private final String MESS_TO_ME_MENU_STATE = "messageToMeMenu";
+    private final String GAMES_MENU_STATE = "gamesMenu";
     //private final String GENERAL_MENU_STATE = "general";
 
     private String menuState = GENERAL_MENU_STATE;
 
-    private String weatherMenuText = Buttons.weatherMenuText;
-    private String newsMenuText = Buttons.newsMenuText;
-    private String gamesMenuText = Buttons.gamesMenuText;
-    private String quoteMenuText = Buttons.quoteMenuText;
-    private String helpMenuText = Buttons.helpMenuText;
-    private String faqMenuText = Buttons.faqMenuText;
+    private final String weatherMenuText = Buttons.weatherMenuText;
+    private final String newsMenuText = Buttons.newsMenuText;
+    private final String gamesMenuText = Buttons.gamesMenuText;
+    private final String quoteMenuText = Buttons.quoteMenuText;
+    private final String helpMenuText = Buttons.helpMenuText;
+    private final String faqMenuText = Buttons.faqMenuText;
 
-    private String weatherMyCityText = Buttons.weatherMyCityText;
-    private String weatherOtherCityText = Buttons.weatherOtherCityText;
-    private String backToMainMenuText = Buttons.backToMainMenuText;
+    private final String weatherMyCityText = Buttons.weatherMyCityText;
+    private final String weatherOtherCityText = Buttons.weatherOtherCityText;
+    private final String backToMainMenuText = Buttons.backToMainMenuText;
 
-    private String getQuotesMenuText = Buttons.getQuotesMenuText;
-    private String addQuotesMenuText = Buttons.addQuotesMenuText;
+    private final String getQuotesMenuText = Buttons.getQuotesMenuText;
+    private final String addQuotesMenuText = Buttons.addQuotesMenuText;
+
+    private final String gamesPaintIoMenuText = Buttons.gamesPaintIoMenuText;
+    private final String gamesCorsairsMenuText = Buttons.gamesCorsairsMenuText;
+    private final String gamesSpinnerMenuText = Buttons.gamesSpinnerMenuText;
+    private final String gamesLumberJackMenuText = Buttons.gamesLumberJackMenuText;
+    private final String gamesMotofx2MenuText = Buttons.gamesMotofx2MenuText;
 
     private DataDownloader dataDownl = new DataDownloader();
     private String myChatId = "351165895";
@@ -131,7 +138,7 @@ public class MainApp extends TelegramLongPollingBot {
             }
             else if (mess.equals(quoteMenuText)) {
                 menuState = QUOTE_MENU_STATE;
-                sendDataMsg(message, getQuotesMenuText);
+                sendDataMsg(message, quoteMenuText);
             }
             else if (mess.equals(getQuotesMenuText)) sendDataMsg(message, "Get Quote");
 
@@ -141,7 +148,12 @@ public class MainApp extends TelegramLongPollingBot {
                 sendDataMsg(message, backToMainMenuText);
             }
 
+            else if (mess.equals(gamesMenuText)){
+                menuState = GAMES_MENU_STATE;
+                sendDataMsg(message, "Қазіргі таңда бот келесі ойындарды ұсына алады:");
+            }
 
+            else if (menuState.equals(GAMES_MENU_STATE)) sendDataMsg(message, "Get Games");
 
             else if (mess.equals(addQuotesMenuText)) {
                 sendDataMsg(message, "Сіз өзіңізге ұнайтын цитатаңызды қосуыңызға болады.\n" +
@@ -166,13 +178,7 @@ public class MainApp extends TelegramLongPollingBot {
             }
             else if (menuState.equals(WEATHER_MENU_STATE)) sendDataMsg(message, "Weather Text");
             else if (menuState.equals(NEWS_MENU_STATE)) sendDataMsg(message, "Get News");
-            else if (mess.equals("QazTBot") ||
-                    mess.equals("QaztBot") ||
-                    mess.equals("qaztBot") ||
-                    mess.equals("qaztbot") ||
-                    mess.equals("Qaztbot") ||
-                    mess.equals("qazTbot") ||
-                    mess.equals("qazTBot")) sendDataMsg(message, "Ау?)");
+            else if ( mess.equals("qazbot") || mess.equals("Qazbot") || mess.equals("qazBot")) sendDataMsg(message, "Ау?)");
 
             else {
                 sendDataMsg(message, "Кешіріңіз дәл қазір мен бұл сұрағыңызға жауап бере алмаймын. " +
@@ -219,7 +225,7 @@ public class MainApp extends TelegramLongPollingBot {
                     sendMsgAll(message.getText()+"\nжазған: "+message.getChat().getFirstName()+"\nЖеке чат номері: "+message.getChatId(), myChatId);
                 }
             }
-        } else if (menuState.equals(QUOTE_MENU_STATE)){
+        } else if (menuState.equals(QUOTE_MENU_STATE) || menuState.equals(MESS_TO_ME_MENU_STATE)){
             if (text.equals("Get Quote")) {
                 try {
                     text = dataDownl.getQuote();
@@ -227,15 +233,26 @@ public class MainApp extends TelegramLongPollingBot {
                     e.printStackTrace();
                 }
             }
-        } else menuState = GENERAL_MENU_STATE;
+        } else if (menuState.equals(GAMES_MENU_STATE)){
+            if (text.equals("Get Games")){
+                if (message.getText().equals(gamesPaintIoMenuText)) text="https://www.gamee.com/game-bot/paintio";
+                else if (message.getText().equals(gamesCorsairsMenuText)) text="https://tbot.xyz/corsairs/";
+                else if (message.getText().equals(gamesLumberJackMenuText)) text="https://tbot.xyz/lumber/";
+                else if (message.getText().equals(gamesSpinnerMenuText)) text="https://www.gamee.com/game-bot/ipUMpcUES";
+                else if (message.getText().equals(gamesMotofx2MenuText)) text="https://www.gamee.com/game-bot/motofx2";
+            }
+        }else menuState = GENERAL_MENU_STATE;
 
 
         sendMessage.setText(text);
         try {
-            if (menuState.equals(WEATHER_MENU_STATE)) Buttons.setWeatherMenuButtons(sendMessage);
-            else if (menuState.equals(NEWS_MENU_STATE)) Buttons.setNewsMenuButtons(sendMessage);
-            else if (menuState.equals(QUOTE_MENU_STATE)) Buttons.setQuotesMenuButtons(sendMessage);
-            else Buttons.setGeneralMenuButtons(sendMessage);
+            switch (menuState){
+                case WEATHER_MENU_STATE: Buttons.setWeatherMenuButtons(sendMessage); break;
+                case NEWS_MENU_STATE: Buttons.setNewsMenuButtons(sendMessage); break;
+                case QUOTE_MENU_STATE: Buttons.setQuotesMenuButtons(sendMessage); break;
+                case GAMES_MENU_STATE: Buttons.setGamesMenuButtons(sendMessage); break;
+                default: Buttons.setGeneralMenuButtons(sendMessage);
+            }
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
