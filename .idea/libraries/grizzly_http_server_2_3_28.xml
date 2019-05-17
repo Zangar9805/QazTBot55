@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="grizzly-http-server-2.3.28">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/repo/org/glassfish/grizzly/grizzly-http-server/2.3.28/grizzly-http-server-2.3.28.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,7 +1,7 @@
-kz/zangpro/data/GoToDB.class
-kz/zangpro/models/WeatherModel.class
-kz/zangpro/data/DataDownloader.class
-kz/zangpro/MainApp.class
-kz/zangpro/data/PostgresDB.class
-kz/zangpro/Buttons.class
-kz/zangpro/models/NewsModel.class
+kz\zangpro\data\DataDownloader.class
+kz\zangpro\models\NewsModel.class
+kz\zangpro\data\PostgresDB.class
+kz\zangpro\models\WeatherModel.class
+kz\zangpro\MainApp.class
+kz\zangpro\Buttons.class
+kz\zangpro\data\GoToDB.class

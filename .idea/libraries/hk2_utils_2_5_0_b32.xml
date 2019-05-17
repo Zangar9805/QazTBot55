@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="hk2-utils-2.5.0-b32">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/repo/org/glassfish/hk2/hk2-utils/2.5.0-b32/hk2-utils-2.5.0-b32.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
