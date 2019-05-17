@@ -3,15 +3,17 @@ package kz.zangpro;
 import kz.zangpro.data.DataDownloader;
 import kz.zangpro.data.GoToDB;
 import kz.zangpro.models.NewsModel;
+import kz.zangpro.models.User;
 import kz.zangpro.models.WeatherModel;
+import kz.zangpro.services.UserService;
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
-import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
-import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -56,6 +58,8 @@ public class MainApp extends TelegramLongPollingBot {
     private DataDownloader dataDownl = new DataDownloader();
     private String myChatId = "351165895";
 
+    UserService userService = new UserService();
+
     public static void main(String... args) {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(); //7478098667
@@ -97,15 +101,18 @@ public class MainApp extends TelegramLongPollingBot {
                 Date date = new Date();
                 String strDate = dateFormat.format(date);
 
-                GoToDB requestAuth = new GoToDB();
-                HashMap<String, String> data = new HashMap<>();
-                data.put("type", "auth");
-                data.put("name", userName);
-                data.put("userName", linkUser);
-                data.put("fullName", fullName);
-                data.put("chatId", chatId);
-                data.put("regDate", strDate);
-                requestAuth.performPostCall("http://zangpro.kz/reqpage", data);
+                User user = new User(userName, linkUser, fullName, chatId, strDate, "Almaty", "general");
+                userService.saveUser(user);
+
+//                GoToDB requestAuth = new GoToDB();
+//                HashMap<String, String> data = new HashMap<>();
+//                data.put("type", "auth");
+//                data.put("name", userName);
+//                data.put("userName", linkUser);
+//                data.put("fullName", fullName);
+//                data.put("chatId", chatId);
+//                data.put("regDate", strDate);
+//                requestAuth.performPostCall("http://zangpro.kz/reqpage", data);
 
                 sendMsgAll("Сіздің ботыңызды " + userName + " @" + linkUser + " өзіне орнатты!", myChatId);
 

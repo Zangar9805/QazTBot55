@@ -12,7 +12,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="QazTBot" target="7" />
+      <module name="QazTBot" target="1.8" />
       <module name="QazTBot (1)" target="7" />
       <module name="QazTBot (2)" target="1.8" />
     </bytecodeTargetLevel>

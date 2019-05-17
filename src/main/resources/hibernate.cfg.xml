@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="connection.url">jdbc:postgresql://ec2-50-19-127-115.compute-1.amazonaws.com:5432/d1hgqcvuaqh2ar</property> <!-- BD Mane -->
+        <property name="connection.driver_class">org.postgresql.Driver</property> <!-- DB Driver -->
+        <property name="connection.username">gsonfkxjxizmdq</property> <!-- DB User -->
+        <property name="connection.password">0052de81ce45c9ba6724e7e8b088e26417a21ac3ac45d8e36e47a569a837a77b</property> <!-- DB Password -->
+
+        <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property> <!-- DB Dialect -->
+        <!--<property name="hbm2ddl.auto">update</property>  create / create-drop / update -->
+
+        <property name="show_sql">true</property> <!-- Show SQL in console -->
+
+        <mapping class="beans.Task"/>
+
+    </session-factory>
+</hibernate-configuration>
